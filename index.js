@@ -36,6 +36,13 @@ client.connect(err => {
       })
     })
 
+    app.get("/orders", (req,res) => {
+      orderCollection.find({email: req.query.email})
+      .toArray((err, documents) => {
+      res.send(documents);
+      })
+    })
+
     app.get('/paints', (req, res) => {
         paintCollection.find({})
         .toArray((err, documents) => {
