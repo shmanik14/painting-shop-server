@@ -16,6 +16,7 @@ const port = process.env.PORT || 4000
 
 client.connect(err => {
     const paintCollection = client.db("paintingPrecision").collection("paints");
+    const orderCollection = client.db("paintingPrecision").collection("orders");
 
     app.post('/addPaint', (req,res) => {
         const paint = req.body;
@@ -24,6 +25,15 @@ client.connect(err => {
             console.log(result);
             res.send(result.insertedCount > 0)
         })
+    })
+
+    app.post('/addOrder', (req,res) => {
+      const order = req.body;
+      orderCollection.insertOne(order)
+      .then(result => {
+          console.log(result);
+          res.send(result.insertedCount > 0)
+      })
     })
 
     app.get('/paints', (req, res) => {
